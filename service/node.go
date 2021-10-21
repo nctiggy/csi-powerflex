@@ -24,7 +24,7 @@ import (
 var (
 	// slice of the connected PowerFlex systems
 	connectedSystemID             = make([]string, 0)
-	publishGetMappedVolMaxRetry   = 30
+	publishGetMappedVolMaxRetry   = 90
 	unpublishGetMappedVolMaxRetry = 5
 )
 
