@@ -2,7 +2,6 @@ package service
 
 import (
 	"fmt"
-        "time"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -13,8 +12,6 @@ import (
 
 func TestMain(m *testing.M) {
 
-	flag.Parse()
-	pflag.Parse()
 	go http.ListenAndServe("localhost:6060", nil)
 	fmt.Printf("starting godog...\n")
 
@@ -25,7 +22,7 @@ func TestMain(m *testing.M) {
 	opts := godog.Options{
 		Format: "pretty",
 		Paths:  []string{"features"},
-		Tags:   "wip",
+		//Tags:   "wip",
 	}
 
 	st := godog.TestSuite{
@@ -39,7 +36,6 @@ func TestMain(m *testing.M) {
 	}
 
 	fmt.Printf("godog test status %d\n", status)
-	time.Sleep(10 * time.Second)
 
 	os.Exit(status)
 }
