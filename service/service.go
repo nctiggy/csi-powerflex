@@ -56,6 +56,8 @@ const (
 	ParamCSILogLevel = "CSI_LOG_LEVEL"
 )
 
+var mx = sync.Mutex{}
+
 // ArrayConfigFile is file name with array connection data
 var ArrayConfigFile string
 
@@ -394,6 +396,9 @@ func (s *service) BeforeServe(
 
 // Probe all systems managed by driver
 func (s *service) doProbe(ctx context.Context) error {
+	mx.Lock()
+        defer mx.Unlock()
+
 	if !strings.EqualFold(s.mode, "node") {
 		if err := s.systemProbeAll(ctx); err != nil {
 			return err
