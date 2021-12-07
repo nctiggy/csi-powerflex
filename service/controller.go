@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"sync"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
@@ -68,6 +69,9 @@ const (
 	//FALSE means "false" (comment put in for lint check)
 	FALSE = "FALSE"
 )
+
+var mx = sync.Mutex{}
+
 
 // Extra metadata field names for propagating to goscaleio and beyond.
 const (
@@ -1531,6 +1535,8 @@ func (s *service) systemProbeAll(ctx context.Context) error {
 	errMap := make(map[string]error)
 
 	for _, array := range s.opts.arrays {
+		mx.Lock()
+		defer mx.Unlock()
 		err := s.systemProbe(ctx, array)
 		systemID := array.SystemID
 		if err == nil {
