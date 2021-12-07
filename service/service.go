@@ -389,6 +389,8 @@ func (s *service) BeforeServe(
 	s.systems = make(map[string]*sio.System)
 
 	if _, ok := csictx.LookupEnv(ctx, "X_CSI_VXFLEXOS_NO_PROBE_ON_START"); !ok {
+		mx.Lock()
+        	defer mx.Unlock()
 		return s.doProbe(ctx)
 	}
 	return nil
@@ -396,8 +398,6 @@ func (s *service) BeforeServe(
 
 // Probe all systems managed by driver
 func (s *service) doProbe(ctx context.Context) error {
-	mx.Lock()
-        defer mx.Unlock()
 
 	if !strings.EqualFold(s.mode, "node") {
 		if err := s.systemProbeAll(ctx); err != nil {
