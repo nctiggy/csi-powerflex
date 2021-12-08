@@ -19,14 +19,14 @@ func TestMain(m *testing.M) {
                 //Tags:   "wip",
         }
 
-        status := m.Run()
-        fmt.Printf("testify status %d\n", status)
-
         st := godog.TestSuite{
                 Name:                "godog",
                 ScenarioInitializer: FeatureContext,
                 Options:             &opts,
         }.Run()
+
+        status := m.Run()
+        fmt.Printf("testify status %d\n", status)
 
         fmt.Printf("godog test status %d\n", st)
 	if st > 0 || status > 0 {
