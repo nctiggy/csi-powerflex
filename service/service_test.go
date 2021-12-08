@@ -20,6 +20,7 @@ func TestMain(m *testing.M) {
         }
 
         status := m.Run()
+        fmt.Printf("testify status %d\n", status)
 
         st := godog.TestSuite{
                 Name:                "godog",
@@ -27,8 +28,7 @@ func TestMain(m *testing.M) {
                 Options:             &opts,
         }.Run()
 
-
-        fmt.Printf("godog test status %d\n", status)
+        fmt.Printf("godog test status %d\n", st)
 	if st > 0 || status > 0 {
 		os.Exit(1)
 	}
