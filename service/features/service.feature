@@ -23,6 +23,7 @@ Feature: VxFlex OS CSI interface
       | "14dbbf5617523654"             | "none"   |
       | "15dbbf5617523655-system-name" | "none"   |
 
+  @wip
   Scenario: Identity GetPluginInfo good call
     Given a VxFlexOS service
     When I call GetPluginInfo
@@ -78,17 +79,19 @@ Feature: VxFlex OS CSI interface
       | "a-b"    | "a"      |
       | "a:b"    | ""       |
 
+  @wip
   Scenario: Identity GetPluginCapabilitiles good call
     Given a VxFlexOS service
     When I call GetPluginCapabilities
     Then a valid GetPluginCapabilitiesResponse is returned
 
+  @wip
   Scenario: Identity Probe good call
     Given a VxFlexOS service
     When I call Probe
     Then a valid ProbeResponse is returned
 
-
+  @wip
   Scenario: Identity Probe call no controller connection
     Given a VxFlexOS service
     And the Controller has no connection

@@ -178,6 +178,8 @@ func (s *service) ProcessMapSecretChange() error {
 		if err != nil {
 			Log.WithError(err).Error("unable to reload multi array config file")
 		}
+		mx.Lock()
+        	defer mx.Unlock()
 		err = s.doProbe(context.Background())
 		if err != nil {
 			Log.WithError(err).Error("unable to probe array in multi array config")

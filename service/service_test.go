@@ -6,36 +6,32 @@ import (
 	_ "net/http/pprof"
 	"os"
 	"testing"
-
 	"github.com/cucumber/godog"
 )
 
 func TestMain(m *testing.M) {
-
 	go http.ListenAndServe("localhost:6060", nil)
-	fmt.Printf("starting godog...\n")
+        fmt.Printf("starting godog...\n")
 
-	status := m.Run()
+        opts := godog.Options{
+                Format: "pretty",
+                Paths:  []string{"features"},
+                Tags:   "wip",
+        }
 
-	fmt.Printf("unit test status %d\n", status)
+        status := m.Run()
 
-	opts := godog.Options{
-		Format: "pretty",
-		Paths:  []string{"features"},
-		//Tags:   "wip",
+        st := godog.TestSuite{
+                Name:                "godog",
+                ScenarioInitializer: FeatureContext,
+                Options:             &opts,
+        }.Run()
+
+
+        fmt.Printf("godog test status %d\n", status)
+	if st > 0 || status > 0 {
+		os.Exit(1)
 	}
+        os.Exit(0)
 
-	st := godog.TestSuite{
-		Name:                "godog",
-		ScenarioInitializer: FeatureContext,
-		Options:             &opts,
-	}.Run()
-
-	if st > status {
-		status = st
-	}
-
-	fmt.Printf("godog test status %d\n", status)
-
-	os.Exit(status)
 }
