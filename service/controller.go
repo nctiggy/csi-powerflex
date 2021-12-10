@@ -998,7 +998,7 @@ func valVolumeCaps(
 	)
 	// Check that all access types are valid
 	if !checkValidAccessTypes(vcs) {
-		fmt.Printf("debug errUnknownAccessType %#v ,err= %s\n", vcs , errUnknownAccessType)
+		fmt.Printf("debug errUnknownAccessType %#v ,err= %s\n", vcs, errUnknownAccessType)
 		return false, errUnknownAccessType
 	}
 
@@ -1032,7 +1032,7 @@ func valVolumeCaps(
 		}
 	}
 
-	fmt.Printf("debug supported %t %s\n", supported , reason)
+	fmt.Printf("debug supported %t %s\n", supported, reason)
 	return supported, reason
 }
 
@@ -1598,6 +1598,7 @@ func (s *service) systemProbe(ctx context.Context, array *ArrayConnectionData) e
 			Password: array.Password,
 		})
 		if err != nil {
+
 			return status.Errorf(codes.FailedPrecondition,
 				"unable to login to VxFlexOS Gateway: %s", err.Error())
 

@@ -7,11 +7,11 @@ import (
 	"net"
 	"net/http/httptest"
 	"os"
-	"sync"
 	"os/exec"
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/container-storage-interface/spec/lib/go/csi"
@@ -79,7 +79,7 @@ type feature struct {
 	adminClient2                          *goscaleio.Client
 	countOfArrays                         int
 	system2                               *goscaleio.System
-	mutex				      sync.Mutex
+	mutex                                 sync.Mutex
 	err                                   error // return from the preceding call
 	getPluginInfoResponse                 *csi.GetPluginInfoResponse
 	getPluginCapabilitiesResponse         *csi.GetPluginCapabilitiesResponse
@@ -225,7 +225,15 @@ func (f *feature) aVxFlexOSService() error {
 			f.server = httptest.NewServer(handler)
 		}
 		if f.service.opts.arrays != nil {
+			c, _ := goscaleio.NewClientWithArgs(f.server.URL, "", false, false)
+			f.service.adminClients[arrayID] = c
+			f.service.adminClients[arrayID2] = c
+			ctx := new(context.Context)
+			config, _ := getArrayConfig(*ctx)
+			f.service.opts.arrays[arrayID] = config[arrayID]
+			fmt.Printf("debug opts array %#v\n", f.service.opts.arrays[arrayID])
 			f.service.opts.arrays[arrayID].Endpoint = f.server.URL
+			f.service.opts.arrays[arrayID2] = config[arrayID2]
 			f.service.opts.arrays[arrayID2].Endpoint = f.server.URL
 		}
 	} else {

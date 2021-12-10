@@ -2,36 +2,32 @@ package service
 
 import (
 	"fmt"
+	"github.com/cucumber/godog"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"testing"
-	"github.com/cucumber/godog"
 )
 
 func TestMain(m *testing.M) {
 	go http.ListenAndServe("localhost:6060", nil)
-        fmt.Printf("starting godog...\n")
+	fmt.Printf("starting godog...\n")
 
-        opts := godog.Options{
-                Format: "pretty",
-                Paths:  []string{"features"},
-                //Tags:   "wip",
-        }
-
-        st := godog.TestSuite{
-                Name:                "godog",
-                ScenarioInitializer: FeatureContext,
-                Options:             &opts,
-        }.Run()
-
-        status := m.Run()
-        fmt.Printf("testify status %d\n", status)
-
-        fmt.Printf("godog test status %d\n", st)
-	if st > 0 || status > 0 {
-		os.Exit(1)
+	opts := godog.Options{
+		Format: "pretty",
+		Paths:  []string{"features"},
+		//Tags:   "wip",
 	}
-        os.Exit(0)
+
+	st := godog.TestSuite{
+		Name:                "godog",
+		ScenarioInitializer: FeatureContext,
+		Options:             &opts,
+	}.Run()
+	m.Run()
+
+	fmt.Printf("godog test status %d\n", st)
+
+	os.Exit(st)
 
 }

@@ -193,6 +193,7 @@ func handleSystemSdc(w http.ResponseWriter, r *http.Request) {
 // handleLogin implements GET /api/login
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	u, p, ok := r.BasicAuth()
+	fmt.Printf("debug handle login %s %s\n", u, p)
 	if !ok || len(strings.TrimSpace(u)) < 1 || len(strings.TrimSpace(p)) < 1 {
 		w.Header().Set("WWW-Authenticate", "Basic realm=Restricted")
 		w.WriteHeader(http.StatusUnauthorized)

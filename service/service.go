@@ -179,7 +179,7 @@ func (s *service) ProcessMapSecretChange() error {
 			Log.WithError(err).Error("unable to reload multi array config file")
 		}
 		mx.Lock()
-        	defer mx.Unlock()
+		defer mx.Unlock()
 		err = s.doProbe(context.Background())
 		if err != nil {
 			Log.WithError(err).Error("unable to probe array in multi array config")
@@ -392,7 +392,7 @@ func (s *service) BeforeServe(
 
 	if _, ok := csictx.LookupEnv(ctx, "X_CSI_VXFLEXOS_NO_PROBE_ON_START"); !ok {
 		mx.Lock()
-        	defer mx.Unlock()
+		defer mx.Unlock()
 		return s.doProbe(ctx)
 	}
 	return nil
@@ -576,6 +576,7 @@ func (s *service) logStatistics() {
 func getArrayConfig(ctx context.Context) (map[string]*ArrayConnectionData, error) {
 	arrays := make(map[string]*ArrayConnectionData)
 
+	fmt.Printf("debug getArrayConfig %s\n", ArrayConfigFile)
 	if _, err := os.Stat(ArrayConfigFile); os.IsNotExist(err) {
 		return nil, fmt.Errorf(fmt.Sprintf("File %s does not exist", ArrayConfigFile))
 	}
@@ -585,6 +586,7 @@ func getArrayConfig(ctx context.Context) (map[string]*ArrayConnectionData, error
 		return nil, fmt.Errorf(fmt.Sprintf("File %s errors: %v", ArrayConfigFile, err))
 	}
 
+	fmt.Printf("debug getArrayConfig %s\n", config)
 	if string(config) != "" {
 		creds := make([]ArrayConnectionData, 0)
 		// support backward compatibility
