@@ -3,11 +3,11 @@ entries:
   csi-vxflexos:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2021-12-18T12:39:42.543328-08:00"
+    created: "2021-12-18T13:45:41.321241-08:00"
     description: 'VxFlex OS CSI (Container Storage Interface) driver Kubernetes integration.
       This chart includes everything required to provision via CSI as well as a VxFlex
       OS StorageClass. '
-    digest: 938ee2378b1f737fdbaec833e7bbfb9795e4fb1f4f361fdd0a6b0b5f3852b1df
+    digest: 83eff297452bf5955a0ae67690d7e884ccd91df95b184f263227a03cf31e5fd6
     keywords:
     - csi
     - storage
@@ -20,4 +20,4 @@ entries:
     urls:
     - https://nctiggy.github.io/csi-powerflex/csi-vxflexos-2.1.0.tgz
     version: 2.1.0
-generated: "2021-12-18T12:39:42.539789-08:00"
+generated: "2021-12-18T13:45:41.32001-08:00"
